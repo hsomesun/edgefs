@@ -5,7 +5,7 @@
 
 SRCDIR=$(NEDGE_HOME)
 PROJECTS_DIRS_PROXY_DEPS=grpc-iscsi grpc-nfs s3gw grpc-s3x grpc-s3
-PROJECTS_DIRS=efscli ccownbd ccowhttpd grpc-efsproxy
+PROJECTS_DIRS=efscli ccownbd ccowhttpd grpc-efsproxy corosync-pod-watcher
 
 MAKEFLAGS += -j
 
