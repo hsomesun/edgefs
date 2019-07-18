@@ -20,11 +20,11 @@ SRCS := main.go $(wildcard */*.go)
 .PHONY: all clean
 
 .get:
-	GOPATH=`pwd` go get -v || true
+	GOPATH=$(SRCDIR)/src flock -e $(SRCDIR)/src go get -v || true
 	touch $@
 
 $(TARGET): $(SRCS) .get
-	GOPATH=`pwd` CGO_LDFLAGS="-L$(SRCDIR)/lib $(DEBUG_LDFLAGS) -lccow -lccowutil -lauditd -lccowfsio -lnanomsg" \
+	GOPATH=$(SRCDIR)/src CGO_LDFLAGS="-L$(SRCDIR)/lib $(DEBUG_LDFLAGS) -lccow -lccowutil -lauditd -lccowfsio -lnanomsg" \
 		CGO_CFLAGS="$(DEBUG_FLAGS) -I$(SRCDIR)/include/ccow -I$(SRCDIR)/include" \
 		go build -o efscli main.go
 
