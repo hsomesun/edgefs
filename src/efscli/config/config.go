@@ -32,7 +32,7 @@ import (
 	"strconv"
 	"strings"
 
-	"../efsutil"
+	"github.com/Nexenta/edgefs/src/efscli/efsutil"
 	"github.com/spf13/cobra"
 )
 

@@ -20,7 +20,7 @@ SRCS := main.go $(wildcard */*.go)
 .PHONY: all clean
 
 .get:
-	GOPATH=$(SRCDIR)/src flock -e $(SRCDIR)/src go get -v || true
+	GOPATH=$(SRCDIR)/src flock -e $(SRCDIR)/src go mod download || true
 	touch $@
 
 $(TARGET): $(SRCS) .get
@@ -33,7 +33,7 @@ fmt:
 		tenant validate object
 
 clean:
-	rm -rf $(TARGET) src .get
+	rm -rf $(TARGET) .get
 
 install: $(TARGET)
 	mkdir -p $(DESTDIR)$(SRCDIR)/sbin 2> /dev/null || true

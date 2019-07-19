@@ -20,11 +20,11 @@ SRCS := main.go $(wildcard */*.go)
 .PHONY: all clean
 
 .get:
-	GOPATH=`pwd` go get -v || true
+	GOPATH=$(SRCDIR)/src flock -e $(SRCDIR)/src go mod download || true
 	touch $@
 
 $(TARGET): $(SRCS) .get
-	GOPATH=`pwd` CGO_LDFLAGS="-L$(SRCDIR)/lib $(DEBUG_LDFLAGS) -lccow -lccowutil -lauditd -lccowfsio -lnanomsg" \
+	GOPATH=$(SRCDIR)/src  CGO_LDFLAGS="-L$(SRCDIR)/lib $(DEBUG_LDFLAGS) -lccow -lccowutil -lauditd -lccowfsio -lnanomsg" \
 		CGO_CFLAGS="$(DEBUG_FLAGS) -I$(SRCDIR)/include/ccow -I$(SRCDIR)/include" \
 		go build -o $(TARGET) main.go
 
@@ -32,7 +32,7 @@ fmt:
 	gofmt -e -s -w main.go
 
 clean:
-	rm -rf $(TARGET) src .get pkg bin
+	rm -rf $(TARGET) .get
 
 install: $(TARGET)
 	mkdir -p $(DESTDIR)$(SRCDIR)/sbin 2> /dev/null || true
